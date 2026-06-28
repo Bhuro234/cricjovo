@@ -13,7 +13,19 @@ const SUGGESTIONS_FILE = path.join(__dirname, 'suggestions.json');
 app.get('/api/stream', (req, res) => {
     fs.readFile(DATA_FILE, 'utf8', (err, data) => {
         if (err) return res.status(500).json({ error: 'Failed to read data' });
-        res.json(JSON.parse(data));
+        try {
+            let parsed = JSON.parse(data);
+            if (parsed.iframeHtml && parsed.iframeHtml.includes('<iframe')) {
+                if (parsed.iframeHtml.includes('allow=')) {
+                    parsed.iframeHtml = parsed.iframeHtml.replace(/allow="[^"]*"/, 'allow="autoplay; fullscreen; encrypted-media; picture-in-picture"');
+                } else {
+                    parsed.iframeHtml = parsed.iframeHtml.replace('<iframe ', '<iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" ');
+                }
+            }
+            res.json(parsed);
+        } catch(e) {
+            res.json({});
+        }
     });
 });
 
