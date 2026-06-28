@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CricJovo - Free Cricket India Match Live | Watch HD Streams</title>
+    <meta name="description" content="Welcome to CricJovo. Watch Free Cricket India match live right here. Get uninterrupted, high-definition live streams for all India cricket matches for free online.">
+    <meta name="keywords" content="cricjovo, cricket india match live free, free cricket india match live, watch india cricket online, free live cricket streaming, t20 match live free, cricket streaming free">
+    <meta property="og:title" content="CricJovo - Free Cricket India Match Live">
+    <meta property="og:description" content="Welcome to CricJovo. Watch Free Cricket India match live. 100% free HD streams without interruptions.">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsEvent",
+      "name": "India Cricket Match Live",
+      "description": "Live high-definition stream of India cricket matches.",
+      "sport": "Cricket",
+      "location": {
+        "@type": "VirtualLocation",
+        "url": "https://cricjovo.com"
+      },
+      "broadcaster": {
+        "@type": "Organization",
+        "name": "CricJovo",
+        "url": "https://cricjovo.com"
+      },
+      "isAccessibleForFree": true,
+      "eventStatus": "https://schema.org/EventScheduled"
+    }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="sporty-background"></div>
+    <div class="main-wrapper">
+        <div class="container">
+            <header class="header">
+                <div class="top-bar">
+                    <div class="live-badge">
+                        <span class="dot"></span> LIVE
+                    </div>
+                    <div class="badge-text">HD STREAM</div>
+                </div>
+                <h1>INDIA CRICKET LIVE</h1>
+                <p>WATCH EVERY MATCH LIVE RIGHT HERE. NO INTERRUPTIONS.</p>
+
+            </header>
+            <div class="player-wrapper" id="player-container">
+                <div class="loading">Loading stream...</div>
+            </div>
+        </div>
+        
+        <footer class="sporty-footer">
+            <div class="footer-content">
+                <div class="slogan">Built by Bhuro.</div>
+                <button class="footer-suggestion-btn" onclick="toggleSuggestionBox()">Suggest a Feature</button>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        async function loadStream() {
+            try {
+                const response = await fetch('/api/stream');
+                const data = await response.json();
+                if (data.iframeHtml) {
+                    document.getElementById('player-container').innerHTML = data.iframeHtml;
+                }
+            } catch (err) {
+                document.getElementById('player-container').innerHTML = '<div class="error" style="color:white; text-align:center; padding:50px;">Failed to load stream. Please try again later.</div>';
+            }
+        }
+        
+        loadStream();
+        setInterval(loadStream, 60000);
+        
+        function toggleSuggestionBox() {
+            const box = document.getElementById('suggestion-box');
+            box.classList.toggle('active');
+        }
+        
+        async function submitSuggestion() {
+            const text = document.getElementById('suggestion-text').value;
+            const statusEl = document.getElementById('suggestion-status');
+            
+            if (!text.trim()) return;
+            
+            statusEl.textContent = 'Sending...';
+            statusEl.style.color = '#8892b0';
+            
+            try {
+                const response = await fetch('/api/suggestions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                
+                if (response.ok) {
+                    statusEl.textContent = 'Thank you for your suggestion!';
+                    statusEl.style.color = '#00ff00';
+                    document.getElementById('suggestion-text').value = '';
+                    setTimeout(() => toggleSuggestionBox(), 2000);
+                } else {
+                    statusEl.textContent = 'Failed to send.';
+                    statusEl.style.color = '#ff3333';
+                }
+            } catch (err) {
+                statusEl.textContent = 'Network error.';
+                statusEl.style.color = '#ff3333';
+            }
+        }
+    </script>
+    
+
+    
+    <div class="suggestion-box" id="suggestion-box">
+        <div class="suggestion-header">
+            <h3>Suggest a Feature</h3>
+            <button class="close-btn" onclick="toggleSuggestionBox()">×</button>
+        </div>
+        <div class="suggestion-body">
+            <textarea id="suggestion-text" placeholder="What should we add next?"></textarea>
+            <button onclick="submitSuggestion()">Send Suggestion</button>
+            <div id="suggestion-status"></div>
+        </div>
+    </div>
+</body>
+</html>

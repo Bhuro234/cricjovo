@@ -1,0 +1,438 @@
+:root {
+    --bg-color: #020914;
+    --card-bg: rgba(6, 17, 33, 0.75);
+    --text-primary: #ffffff;
+    --text-secondary: #8892b0;
+    --accent-blue: #00e5ff;
+    --accent-orange: #ff6b00;
+    --live-red: #ff003c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    max-width: 1100px;
+    align-items: center;
+}
+
+/* Stunning Stadium Background */
+.sporty-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(circle at 20% -10%, rgba(0, 229, 255, 0.25) 0%, transparent 60%),
+        radial-gradient(circle at 80% 110%, rgba(255, 107, 0, 0.15) 0%, transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(2, 9, 20, 0.5), rgba(2, 9, 20, 0.95)),
+        url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+    background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px, 100% 100%, cover;
+    background-position: center;
+    animation: subtleZoom 25s infinite alternate ease-in-out;
+}
+
+@keyframes subtleZoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+}
+
+.container {
+    width: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 36px;
+    padding: 40px;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(0, 229, 255, 0.15),
+        0 0 40px rgba(0, 229, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 4px;
+}
+
+.live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--live-red);
+    color: white;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.5);
+    text-transform: uppercase;
+}
+
+.badge-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(0, 229, 255, 0.1);
+    padding: 6px 18px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    animation: blink 1.5s infinite ease-in-out;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: #ffffff;
+    letter-spacing: 3px;
+    margin: 0;
+    text-shadow: 
+        3px 3px 0px var(--accent-orange),
+        -2px -2px 0px var(--accent-blue);
+}
+
+p {
+    color: var(--accent-blue);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.audio-hint {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 16px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-top: -10px;
+}
+
+.player-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border-radius: 28px;
+    overflow: hidden;
+    background-color: #000;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(0, 229, 255, 0.15);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-wrapper .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.player-wrapper:hover {
+    border-color: var(--accent-orange);
+    box-shadow: 0 20px 60px rgba(255, 107, 0, 0.15);
+}
+
+.player-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 26px;
+}
+
+/* Footer Styles */
+.sporty-footer {
+    width: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 24px;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.slogan {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    letter-spacing: 3px;
+    font-weight: 500;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-links a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--accent-orange);
+    text-decoration: underline;
+}
+
+/* Admin Portal Styles */
+.admin-container {
+    max-width: 600px;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group input, .form-group textarea {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    color: white;
+    font-family: monospace;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--accent-orange);
+}
+
+.submit-btn {
+    background: linear-gradient(45deg, var(--accent-orange), var(--live-red));
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 107, 0, 0.4);
+}
+
+.status-message {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 10px;
+    height: 20px;
+}
+
+.success { color: #00ff88; }
+.error { color: var(--live-red); }
+
+@media (max-width: 600px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* Suggestion Box */
+.footer-suggestion-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 5px;
+}
+.footer-suggestion-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.suggestion-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    width: 320px;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(20px);
+}
+.suggestion-box.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%);
+}
+.suggestion-header {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.suggestion-header h3 {
+    margin: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--accent-blue);
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+.close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+}
+.close-btn:hover { color: white; }
+.suggestion-body { padding: 15px; }
+.suggestion-body textarea {
+    width: 100%;
+    min-height: 100px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 10px;
+    color: white;
+    font-family: inherit;
+    resize: none;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+.suggestion-body textarea:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+}
+.suggestion-body button {
+    width: 100%;
+    background: var(--accent-blue);
+    color: #020914;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.2s;
+}
+.suggestion-body button:hover { background: #33ebff; }
+#suggestion-status { margin-top: 10px; font-size: 0.9rem; text-align: center; }
