@@ -51,7 +51,10 @@
 
             </header>
             <div class="player-wrapper" id="player-container">
-                <div class="loading">Loading stream...</div>
+                <div class="play-overlay" id="play-overlay" onclick="startStream()">
+                    <div class="play-button">▶</div>
+                    <div class="play-text">TAP TO WATCH LIVE</div>
+                </div>
             </div>
         
         <footer class="sporty-footer">
@@ -63,20 +66,35 @@
     </div>
     
     <script>
+        let currentIframeHtml = '';
+        
         async function loadStream() {
             try {
                 const response = await fetch('/api/stream');
                 const data = await response.json();
-                if (data.iframeHtml) {
-                    document.getElementById('player-container').innerHTML = data.iframeHtml;
+                if (data.iframeHtml && data.iframeHtml !== currentIframeHtml) {
+                    currentIframeHtml = data.iframeHtml;
+                    // Only auto-update if the video is already playing
+                    if (!document.getElementById('play-overlay')) {
+                        document.getElementById('player-container').innerHTML = currentIframeHtml;
+                    }
                 }
             } catch (err) {
-                document.getElementById('player-container').innerHTML = '<div class="error" style="color:white; text-align:center; padding:50px;">Failed to load stream. Please try again later.</div>';
+                console.error('Failed to check stream updates');
+            }
+        }
+
+        function startStream() {
+            if (currentIframeHtml) {
+                document.getElementById('player-container').innerHTML = currentIframeHtml;
+            } else {
+                document.getElementById('play-text').innerText = 'LOADING STREAM...';
+                setTimeout(startStream, 1500);
             }
         }
         
         loadStream();
-        setInterval(loadStream, 60000);
+        setInterval(loadStream, 30000);
         
         function toggleSuggestionBox() {
             const box = document.getElementById('suggestion-box');

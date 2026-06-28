@@ -210,6 +210,46 @@ p {
     border-radius: 26px;
 }
 
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s ease;
+}
+
+.play-overlay:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.play-button {
+    font-size: 5rem;
+    color: var(--accent-orange);
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 20px rgba(255, 107, 0, 0.6));
+    transition: transform 0.2s ease;
+}
+
+.play-overlay:hover .play-button {
+    transform: scale(1.1);
+}
+
+.play-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: white;
+    letter-spacing: 3px;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+}
+
 /* Footer Styles */
 .sporty-footer {
     width: 100%;
