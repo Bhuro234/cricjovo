@@ -21,6 +21,15 @@ app.get('/api/stream', (req, res) => {
                 } else {
                     parsed.iframeHtml = parsed.iframeHtml.replace('<iframe ', '<iframe allow="autoplay; fullscreen; encrypted-media; picture-in-picture" ');
                 }
+                
+                parsed.iframeHtml = parsed.iframeHtml.replace(/src="([^"]+)"/, function(match, url) {
+                    if (url.includes('mute=')) return match;
+                    if (url.includes('?')) {
+                        return 'src="' + url + '&mute=1&muted=1&autoplay=1"';
+                    } else {
+                        return 'src="' + url + '?mute=1&muted=1&autoplay=1"';
+                    }
+                });
             }
             res.json(parsed);
         } catch(e) {
