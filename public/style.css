@@ -330,6 +330,23 @@ p {
 .error { color: var(--live-red); }
 
 @media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 15px;
+        border-radius: 20px;
+    }
+    .player-wrapper {
+        border-radius: 12px;
+        border-width: 1px;
+    }
+    .player-wrapper iframe {
+        border-radius: 10px;
+    }
+    h1 {
+        font-size: 3rem;
+    }
     .footer-links {
         flex-direction: column;
         gap: 12px;
