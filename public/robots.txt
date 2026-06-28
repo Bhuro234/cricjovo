@@ -4,4 +4,4 @@ Disallow: /admin.html
 Disallow: /admin.js
 Disallow: /api/
 
-Sitemap: https://cricjovo.com/sitemap.xml
+Sitemap: https://cricjovo.onrender.com/sitemap.xml
